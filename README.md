@@ -1,3 +1,1 @@
-The OpenShift `nodejs` cartridge documentation can be found at:
-
-http://openshift.github.io/documentation/oo_cartridge_guide.html#nodejs
+A Node.js app that distributes funds for a Distributed Autonomous Corporation (DAC) using Bitcoin.
