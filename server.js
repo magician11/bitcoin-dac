@@ -1,6 +1,5 @@
 var express = require('express');
 var nodemailer = require('nodemailer');
-var fs = require('fs');
 
 var bitcoindacApp = express();
 
@@ -9,9 +8,6 @@ bitcoindacApp.configure(function() {
     bitcoindacApp.use(express.static(__dirname + '/public'));
 });
 
-// load config file
-var bitcoindacConfig = JSON.parse(fs.readFileSync('bitcoindac_config.json'));
-
 // api start ---------------------------------------------------------------------
 // send an email
 bitcoindacApp.get('/email', function(req, res) {
@@ -19,16 +15,16 @@ bitcoindacApp.get('/email', function(req, res) {
     var smtpTransport = nodemailer.createTransport("SMTP",{
         service: "Gmail",
         auth: {
-            user: bitcoindacConfig.emailAuth.user,
-            pass: bitcoindacConfig.emailAuth.password
+            user: process.env.EMAIL_AUTH_USER,
+            pass: process.env.EMAIL_AUTH_PASSWORD
         }
     });
 
     var mailOptions = {
-        from: "Michelle Yummy <foo@blurdybloop.com>",
-        to: "andrewgolightly11@gmail.com",
-        subject: "Hello xx",
-        html: "<b>Hey!</b><br><h1>love you</h1>"
+        from: "DAC <system@bitcoindac.com>",
+        to: process.env.EMAIL_RECIPIENT,
+        subject: "System notification",
+        html: "<h1>Hey you!</h1><br><p>Someone accessed the email API at " + new Date() + "</p>"
     }
 
     // send mail with defined transport object
