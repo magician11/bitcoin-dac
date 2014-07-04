@@ -30,11 +30,11 @@ bitcoindacApp.get('/email', function(req, res) {
     // send mail with defined transport object
     smtpTransport.sendMail(mailOptions, function(error, response){
         if(error){
-            console.log(error);
-            res.send("Error: " + error.message);
+            console.log(error.message);
+            res.json({error: error});
         }else{
             console.log("Message sent: " + response.message);
-            res.send("Message sent: " + response.message);
+            res.json({success: response});
         }
 
         smtpTransport.close();
